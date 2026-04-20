@@ -29,6 +29,7 @@ export type Database = {
           payment_reference: string | null
           payment_status: string
           phone: string
+          provider_id: string | null
           service_category: string
           status: string
           updated_at: string
@@ -48,6 +49,7 @@ export type Database = {
           payment_reference?: string | null
           payment_status?: string
           phone: string
+          provider_id?: string | null
           service_category: string
           status?: string
           updated_at?: string
@@ -67,6 +69,7 @@ export type Database = {
           payment_reference?: string | null
           payment_status?: string
           phone?: string
+          provider_id?: string | null
           service_category?: string
           status?: string
           updated_at?: string
