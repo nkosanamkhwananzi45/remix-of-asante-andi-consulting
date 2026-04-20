@@ -27,6 +27,7 @@ const ResetPassword = lazy(() => import("./pages/ResetPassword"));
 const Dashboard = lazy(() => import("./pages/Dashboard"));
 const AdminDashboard = lazy(() => import("./pages/AdminDashboard"));
 const ProviderPortal = lazy(() => import("./pages/ProviderPortal"));
+const ProviderProfile = lazy(() => import("./pages/ProviderProfile"));
 const TermsOfService = lazy(() => import("./pages/TermsOfService"));
 
 const queryClient = new QueryClient();
@@ -80,6 +81,14 @@ const App = () => (
                 element={
                   <ProtectedRoute requiredRole="provider">
                     <ProviderPortal />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/provider/profile"
+                element={
+                  <ProtectedRoute requiredRole="provider">
+                    <ProviderProfile />
                   </ProtectedRoute>
                 }
               />
