@@ -6,7 +6,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
-import { Shield, UserPlus, Trash2, Loader2 } from 'lucide-react';
+import { Shield, UserPlus, Trash2, Loader2, GraduationCap } from 'lucide-react';
 import type { Database } from '@/integrations/supabase/types';
 
 type AppRole = Database['public']['Enums']['app_role'];
@@ -179,36 +179,63 @@ export const UserManagement = () => {
                     </div>
                   </TableCell>
                   <TableCell>
-                    {availableToAdd.length > 0 ? (
-                      <div className="flex items-center gap-2">
-                        <Select
-                          value={selectedRole[user.id] || ''}
-                          onValueChange={(val) => setSelectedRole(prev => ({ ...prev, [user.id]: val as AppRole }))}
-                        >
-                          <SelectTrigger className="w-32">
-                            <SelectValue placeholder="Role..." />
-                          </SelectTrigger>
-                          <SelectContent>
-                            {availableToAdd.map(r => (
-                              <SelectItem key={r} value={r}>{r}</SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
+                    <div className="flex items-center gap-2 flex-wrap">
+                      {!user.roles.includes('provider') && (
                         <Button
                           size="sm"
-                          onClick={() => handleAddRole(user.id)}
-                          disabled={!selectedRole[user.id] || actionLoading === `add-${user.id}`}
+                          variant="secondary"
+                          onClick={async () => {
+                            setSelectedRole(prev => ({ ...prev, [user.id]: 'provider' }));
+                            setActionLoading(`add-${user.id}`);
+                            const { error } = await supabase
+                              .from('user_roles')
+                              .insert({ user_id: user.id, role: 'provider' });
+                            setActionLoading(null);
+                            if (error) {
+                              if (error.code === '23505') toast.error('User already has this role');
+                              else toast.error('Failed to promote user');
+                            } else {
+                              toast.success(`${user.full_name || user.email || 'User'} promoted to tutor`);
+                              fetchUsers();
+                            }
+                          }}
+                          disabled={actionLoading === `add-${user.id}`}
                         >
-                          {actionLoading === `add-${user.id}` ? (
-                            <Loader2 className="w-4 h-4 animate-spin" />
-                          ) : (
-                            <UserPlus className="w-4 h-4" />
-                          )}
+                          <GraduationCap className="w-4 h-4 mr-1" />
+                          Make Tutor
                         </Button>
-                      </div>
-                    ) : (
-                      <span className="text-sm text-muted-foreground">All roles assigned</span>
-                    )}
+                      )}
+                      {availableToAdd.length > 0 ? (
+                        <div className="flex items-center gap-2">
+                          <Select
+                            value={selectedRole[user.id] || ''}
+                            onValueChange={(val) => setSelectedRole(prev => ({ ...prev, [user.id]: val as AppRole }))}
+                          >
+                            <SelectTrigger className="w-32">
+                              <SelectValue placeholder="Role..." />
+                            </SelectTrigger>
+                            <SelectContent>
+                              {availableToAdd.map(r => (
+                                <SelectItem key={r} value={r}>{r}</SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                          <Button
+                            size="sm"
+                            onClick={() => handleAddRole(user.id)}
+                            disabled={!selectedRole[user.id] || actionLoading === `add-${user.id}`}
+                          >
+                            {actionLoading === `add-${user.id}` ? (
+                              <Loader2 className="w-4 h-4 animate-spin" />
+                            ) : (
+                              <UserPlus className="w-4 h-4" />
+                            )}
+                          </Button>
+                        </div>
+                      ) : (
+                        <span className="text-sm text-muted-foreground">All roles assigned</span>
+                      )}
+                    </div>
                   </TableCell>
                 </TableRow>
               );
