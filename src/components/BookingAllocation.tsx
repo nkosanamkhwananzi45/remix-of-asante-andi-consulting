@@ -42,6 +42,8 @@ interface Provider {
   id: string;
   full_name: string | null;
   email: string | null;
+  bio?: string | null;
+  skills?: string[] | null;
 }
 
 const UNASSIGNED = '__unassigned__';
@@ -98,11 +100,11 @@ export const BookingAllocation = () => {
 
       const { data: profileRows, error: profErr } = await supabase
         .from('profiles')
-        .select('id, full_name, email')
+        .select('id, full_name, email, bio, skills')
         .in('id', ids);
       if (profErr) throw profErr;
 
-      setProviders(profileRows ?? []);
+      setProviders((profileRows ?? []) as Provider[]);
     } catch (error) {
       console.error(error);
       toast.error('Failed to load providers');
@@ -238,11 +240,32 @@ export const BookingAllocation = () => {
                                 : <span className="text-muted-foreground">Unassigned</span>}
                             </SelectValue>
                           </SelectTrigger>
-                          <SelectContent>
+                          <SelectContent className="max-w-sm">
                             <SelectItem value={UNASSIGNED}>Unassigned</SelectItem>
                             {providers.map((p) => (
                               <SelectItem key={p.id} value={p.id}>
-                                {p.full_name || p.email || p.id.slice(0, 8)}
+                                <div className="flex flex-col gap-1 py-1">
+                                  <span className="font-medium">
+                                    {p.full_name || p.email || p.id.slice(0, 8)}
+                                  </span>
+                                  {p.skills && p.skills.length > 0 && (
+                                    <div className="flex flex-wrap gap-1">
+                                      {p.skills.slice(0, 4).map((s) => (
+                                        <span
+                                          key={s}
+                                          className="text-[10px] px-1.5 py-0.5 rounded bg-muted text-muted-foreground"
+                                        >
+                                          {s}
+                                        </span>
+                                      ))}
+                                    </div>
+                                  )}
+                                  {p.bio && (
+                                    <span className="text-xs text-muted-foreground line-clamp-2">
+                                      {p.bio}
+                                    </span>
+                                  )}
+                                </div>
                               </SelectItem>
                             ))}
                           </SelectContent>
