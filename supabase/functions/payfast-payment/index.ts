@@ -83,10 +83,15 @@ Deno.serve(async (req) => {
       return json({ error: 'Invalid booking amount' }, 400)
     }
 
-    const merchantId = Deno.env.get('PAYFAST_MERCHANT_ID') || '10000100'
-    const merchantKey = Deno.env.get('PAYFAST_MERCHANT_KEY') || '46f0cd694581a'
+    const merchantId = Deno.env.get('PAYFAST_MERCHANT_ID')
+    const merchantKey = Deno.env.get('PAYFAST_MERCHANT_KEY')
     const passphrase = Deno.env.get('PAYFAST_PASSPHRASE') || ''
     const siteUrl = Deno.env.get('SITE_URL') || 'https://asanteandi.co.za'
+
+    if (!merchantId || !merchantKey) {
+      console.error('PayFast credentials not configured')
+      return json({ error: 'Payment provider not configured' }, 500)
+    }
 
     const firstName = (booking.full_name || '').split(' ')[0] || ''
     const itemName = (booking.package_selected || 'Booking').toString().substring(0, 100)
