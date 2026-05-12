@@ -90,6 +90,7 @@ export type Database = {
           notes: string | null
           preferred_start_date: string
           priority: string
+          provider_id: string | null
           required_skills: string[] | null
           service_description: string
           service_type: string
@@ -108,6 +109,7 @@ export type Database = {
           notes?: string | null
           preferred_start_date: string
           priority?: string
+          provider_id?: string | null
           required_skills?: string[] | null
           service_description: string
           service_type: string
@@ -126,6 +128,7 @@ export type Database = {
           notes?: string | null
           preferred_start_date?: string
           priority?: string
+          provider_id?: string | null
           required_skills?: string[] | null
           service_description?: string
           service_type?: string
