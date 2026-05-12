@@ -118,7 +118,6 @@ Deno.serve(async (req) => {
 
     return json({
       redirectUrl: `https://www.payfast.co.za/eng/process?${queryString}`,
-      paymentData,
     })
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : 'Unknown error'
