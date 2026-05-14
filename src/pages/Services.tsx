@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { GraduationCap, BookOpen, Baby, Users, PenTool, Briefcase, Rocket } from "lucide-react";
+import { GraduationCap, BookOpen, Baby, Users, PenTool, Briefcase, Rocket, Wrench } from "lucide-react";
 import { services } from "@/data/services";
 import Layout from "@/components/Layout";
 
@@ -11,6 +11,7 @@ const iconMap: Record<string, React.ReactNode> = {
   PenTool: <PenTool className="w-8 h-8" />,
   Briefcase: <Briefcase className="w-8 h-8" />,
   Rocket: <Rocket className="w-8 h-8" />,
+  Wrench: <Wrench className="w-8 h-8" />,
 };
 
 const ServicesPage = () => (
