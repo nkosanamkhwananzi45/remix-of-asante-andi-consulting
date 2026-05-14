@@ -79,6 +79,44 @@ const ServiceDetail = () => {
         </div>
       </section>
 
+      {/* Skills course catalogue */}
+      {isSkills && (
+        <section className="py-16 bg-muted/50">
+          <div className="container max-w-5xl">
+            <div className="text-center mb-10">
+              <span className="inline-flex items-center gap-2 text-gold text-sm font-bold uppercase tracking-wider">
+                <Sparkles className="w-4 h-4" /> Full Course Catalogue
+              </span>
+              <h2 className="text-2xl md:text-3xl font-display font-bold text-foreground mt-2">
+                13 Hands-On Courses to Choose From
+              </h2>
+              <p className="text-muted-foreground mt-2 max-w-2xl mx-auto">
+                Pick a single course or unlock the full programme. Every course includes practical training, supplier guidance, and WhatsApp mentorship.
+              </p>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+              {skillsCourses.map(c => (
+                <div key={c.name} className="bg-card rounded-lg border border-border p-4 flex items-start gap-3 hover:border-primary/40 transition-colors">
+                  <CheckCircle className="w-5 h-5 text-whatsapp shrink-0 mt-0.5" />
+                  <div>
+                    <p className="font-semibold text-foreground text-sm">{c.name}</p>
+                    <p className="text-xs text-muted-foreground">{c.category}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="text-center mt-10">
+              <Link
+                to="/book?service=skills"
+                className="inline-block px-8 py-3 rounded-lg bg-accent text-accent-foreground font-bold hover:opacity-90 transition-opacity"
+              >
+                Book a Skills Course
+              </Link>
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* Institutions grid for academic */}
       {slug === "academic" && (
         <section className="py-16 bg-muted/50">
