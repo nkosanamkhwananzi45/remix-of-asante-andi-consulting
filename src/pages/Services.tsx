@@ -19,7 +19,7 @@ const ServicesPage = () => (
     <section className="gradient-hero dot-pattern pt-28 pb-16">
       <div className="container text-center">
         <h1 className="text-3xl md:text-5xl font-display font-bold text-dark-bg-foreground mb-4">Our Services</h1>
-        <p className="text-dark-bg-foreground/70 max-w-lg mx-auto">Comprehensive support across 6 categories to help you succeed academically and professionally.</p>
+        <p className="text-dark-bg-foreground/70 max-w-lg mx-auto">Comprehensive support across 8 categories to help you succeed academically and professionally.</p>
       </div>
     </section>
     <section className="py-16">
