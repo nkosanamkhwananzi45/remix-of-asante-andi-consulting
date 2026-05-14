@@ -1,7 +1,23 @@
 import { useParams, Link, Navigate } from "react-router-dom";
-import { CheckCircle, ShieldCheck } from "lucide-react";
+import { CheckCircle, ShieldCheck, Sparkles } from "lucide-react";
 import { getServiceBySlug, institutions } from "@/data/services";
 import Layout from "@/components/Layout";
+
+const skillsCourses = [
+  { name: "Balloon Inflating & Event Decor", category: "Creative" },
+  { name: "Cricut Design & Crafting", category: "Creative" },
+  { name: "Canva Graphic Design", category: "Creative" },
+  { name: "Carpentry", category: "Trade" },
+  { name: "Upholstery & Furniture Repair", category: "Trade" },
+  { name: "Tiling Installation", category: "Trade" },
+  { name: "Electrician Basics & Wiring", category: "Trade" },
+  { name: "Plumbing Essentials", category: "Trade" },
+  { name: "Make-Up Artistry", category: "Beauty" },
+  { name: "Nails (Manicure & Acrylic)", category: "Beauty" },
+  { name: "Making Weaves & Wig Construction", category: "Beauty" },
+  { name: "Sewing & Garment Making", category: "Beauty" },
+  { name: "Shoe Making & Repair", category: "Beauty" },
+];
 
 const ServiceDetail = () => {
   const { slug } = useParams();
@@ -10,6 +26,7 @@ const ServiceDetail = () => {
   if (!service) return <Navigate to="/services" replace />;
 
   const isAcademic = slug === "academic" || slug === "research";
+  const isSkills = slug === "skills";
 
   return (
     <Layout>
